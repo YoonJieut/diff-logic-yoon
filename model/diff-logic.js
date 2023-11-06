@@ -1,7 +1,6 @@
+import fs, { readFileSync } from 'node:fs';
+// import fromDB-data from './package.json' assert { type: 'json' };
 
-console.log('diff-logic');
-import fs from 'fs';
-import path from 'path';
 /**
  * 
  * @param {JSON, Path} inputJSONdata 
@@ -30,12 +29,11 @@ export default function A (inputJSONPath, outputJSONPath) {
 
     // json 객체로 바꾸는 로직
     console.log("readfile 실행");
-    fs.readFileSync(inputJSONPath, "utf8", (json)=>{
-      try {
-        const data = JSON.parse(json);
-        console.log("json parse :" +data);
-      }catch(err){
+    fs.readFileSync(inputJSONPath, "utf8", (err, json)=>{
+      if(err){
         console.error(err)
+      }else {
+        console.log(json)
       }
 
     })
@@ -45,7 +43,7 @@ export default function A (inputJSONPath, outputJSONPath) {
   return result;
 };
 
-const inputJSONPath = "../data/fromDB-data.json";
+const inputJSONPath = "./fromDB-data.json";
 const outputJSONPath = "../data/differences.json";
 
 A(inputJSONPath, outputJSONPath);
