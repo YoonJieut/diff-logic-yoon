@@ -1,4 +1,7 @@
 
+console.log('diff-logic');
+import fs from 'fs';
+import path from 'path';
 /**
  * 
  * @param {JSON, Path} inputJSONdata 
@@ -6,11 +9,12 @@
  * @returns Object
  */
 
-export default function(inputJSONPath, outputJSONPath) {
+
+export default function  (inputJSONPath, outputJSONPath) {
   if (!inputJSONPath.endsWith('.json') || !outputJSONPath.endsWith('.json')) {
     throw new Error(`매개변수 ${inputJSONPath}, ${outputJSONPath}는 json 파일이 아닙니다.`);
   }
-  let result = {};
+  let result = { };
   /**
    * ? Q. JSON 파일을 아래의 5, 6번에 해당하는 로직 작성 후 JSON으로 저장
    * ? Q. 저장이 완료되면 초기화된 result에 객체를 리턴
@@ -24,5 +28,20 @@ export default function(inputJSONPath, outputJSONPath) {
    * * 7. 리턴을 통해 결과값을 전달
    */
 
+    // json 객체로 바꾸는 로직
+    console.log("readfile 실행");
+    fs.readFileSync(inputJSONPath, "utf8", (json)=>{
+      try {
+        const data = JSON.parse(json);
+        console.log("json parse :" +data);
+      }catch(err){
+        console.error(err)
+      }
+
+    })
+
+
+
   return result;
 }
+;
