@@ -1,5 +1,6 @@
-import fs, { readFileSync } from 'node:fs';
-// import fromDB-data from './package.json' assert { type: 'json' };
+// ESM 방식으로 fs/promises와 path 모듈 가져오기
+import { readFile } from 'fs/promises';
+import path from 'path';
 
 /**
  * 
@@ -27,24 +28,29 @@ export default function A (inputJSONPath, outputJSONPath) {
    * * 7. 리턴을 통해 결과값을 전달
    */
 
-    // json 객체로 바꾸는 로직
-    console.log("readfile 실행");
-    fs.readFileSync(inputJSONPath, "utf8", (err, json)=>{
-      if(err){
-        console.error(err)
-      }else {
-        console.log(json)
-      }
 
-    })
+
 
 
 
   return result;
 };
 
-const inputJSONPath = "./fromDB-data.json";
-const outputJSONPath = "../data/differences.json";
+//process.cwd()가 __dirname과 같다. esm 방식에선__dirname은 지원하지 않는다.
 
-A(inputJSONPath, outputJSONPath);
+const jsonFilePath = path.join(process.cwd(),'data', 'fromDB-data.json'); // JSON 파일 경로
+console.log(jsonFilePath);
+// 비동기 함수에서 await를 사용하여 파일 읽기
+async function readJsonFile() {
+  try {
+    const jsonString = await readFile(jsonFilePath, 'utf8');
+    const data = JSON.parse(jsonString);
+    console.log('JSON data:', data); // JSON 데이터 출력
+  } catch (err) {
+    console.error('Error reading or parsing JSON file:', err);
+  }
+}
+
+readJsonFile();
+
 
