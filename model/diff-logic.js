@@ -10,7 +10,7 @@ import path from 'path';
  */
 
 
-export default function  (inputJSONPath, outputJSONPath) {
+export default function A (inputJSONPath, outputJSONPath) {
   if (!inputJSONPath.endsWith('.json') || !outputJSONPath.endsWith('.json')) {
     throw new Error(`매개변수 ${inputJSONPath}, ${outputJSONPath}는 json 파일이 아닙니다.`);
   }
@@ -43,5 +43,10 @@ export default function  (inputJSONPath, outputJSONPath) {
 
 
   return result;
-}
-;
+};
+
+const inputJSONPath = "../data/fromDB-data.json";
+const outputJSONPath = "../data/differences.json";
+
+A(inputJSONPath, outputJSONPath);
+
