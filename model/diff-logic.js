@@ -28,15 +28,23 @@ export default function A (inputJSONName, outputJSONName) {
    */
 
   // step1. 파일을 읽어옵니다.
-  // 경로 설정 변수 세팅
+  // 경로 설정 변수 세팅 
+  // * 상대경로와 절대경로 방식 2가지 방식
+  // * 절대경로가 다른 컴퓨터에서도 오류가 나지 않을 확률이 높다.
   // const inputJSONPath = `data/${inputJSONName}`
   const inputJSONPath = path.join(process.cwd(), 'data', inputJSONName)
   const outputJSONPath = path.join(process.cwd(), 'data', outputJSONName)
 
+  // json 파일로 parse한다.
   const fromDBData = JSON.parse(readFileSync(inputJSONPath, { encoding: 'utf8' }));
   const diffDBData = JSON.parse(readFileSync(outputJSONPath, { encoding: 'utf8' }));
 
+  // 띄워쓰기를 구분하여 파일을 나눈다.
+  const operatorWord = fromDBData.operator.split(/\s+/);
+  const operandrWord = fromDBData.operand.split(/\s+/);
 
-  return console.log(result);
+
+
+  return console.log(operandrWord, '-------',operatorWord);
 }
 A("fromDB-data.json", "differences.json");
