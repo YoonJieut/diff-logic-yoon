@@ -30,10 +30,13 @@ export default function A (inputJSONName, outputJSONName) {
   // step1. 파일을 읽어옵니다.
   // 경로 설정 변수 세팅
   // const inputJSONPath = `data/${inputJSONName}`
+  const inputJSONPath = path.join(__dirname, 'data', inputJSONName)
+
   const fromDBData = JSON.parse(readFileSync(inputJSONPath, { encoding: 'utf8' }));
+  const diffDBData = JSON.parse(readFileSync(inputJSONPath, { encoding: 'utf8' }));
 
 
-result = fromDBData;
+  result = fromDBData;
 
   return console.log(result);
 }
