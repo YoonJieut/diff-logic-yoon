@@ -10,7 +10,7 @@ import { arrySame } from './arrySame.js';
  * @returns Object
  */
 
-export default function A (inputJSONName, outputJSONName) {
+export default function (inputJSONName, outputJSONName) {
   if (!inputJSONName.endsWith('.json') || !outputJSONName.endsWith('.json')) {
     throw new Error(`매개변수 ${inputJSONName}, ${outputJSONName}는 json 파일이 아닙니다.`);
   }
@@ -64,4 +64,3 @@ const differenceWord = Array.from(allWords).filter(word => !sameWord.includes(wo
 
   return result
 }
-A("fromDB-data.json", "differences.json");
