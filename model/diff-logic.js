@@ -2,7 +2,6 @@ import { readFileSync, writeFileSync } from 'fs';
 import path from 'path';
 import { arrySame } from './arrySame.js';
 
-
 /**
  * 
  * @param {JSON, Path} inputJSONdata 
@@ -28,7 +27,7 @@ export default function (inputJSONName, outputJSONName) {
    * * 7. 리턴을 통해 결과값을 전달
    */
 
-  // step1. 파일을 읽어옵니다.
+  // 파일을 읽어온다.
   // 경로 설정 변수 세팅 
   // * 상대경로와 절대경로 방식 2가지 방식
   // * 절대경로가 다른 컴퓨터에서도 오류가 나지 않을 확률이 높다.
@@ -38,13 +37,15 @@ export default function (inputJSONName, outputJSONName) {
 
   // json 파일로 parse한다.
   const fromDBData = JSON.parse(readFileSync(inputJSONPath, { encoding: 'utf8' }));
-  const diffDBData = JSON.parse(readFileSync(outputJSONPath, { encoding: 'utf8' }));
+  // * 결과 파일의 양식을 읽어오지 않는 방식을 선택
+  // * 대신 result와 같은 양식인 객체 리터럴을 생성했다.
+  // const diffDBData = JSON.parse(readFileSync(outputJSONPath, { encoding: 'utf8' }));
 
   // 띄워쓰기를 구분하여 파일을 나눈다.
   const operatorWord = arrySame(fromDBData.operator);
   const operandWord = arrySame(fromDBData.operand);
 
-  console.log(operandWord, '-----',operatorWord);
+  // console.log(operandWord, '-----',operatorWord);
 
   // 비교하기 후 각 결과에 저장하기
   // 동일 단어와 차이 나는 단어들을 찾습니다.

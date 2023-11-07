@@ -4,7 +4,7 @@ import fs from "fs";
 // custom modules
 import diffLogic from "./model/diff-logic.js";
 
-// json files path
+// json files name
 const inputJSONPath = "./config/fromDB-data.json";
 const outputJSONPath = "./config/differences.json";
 
