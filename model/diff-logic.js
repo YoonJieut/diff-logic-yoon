@@ -42,18 +42,17 @@ export default function A (inputJSONName, outputJSONName) {
 
   // 띄워쓰기를 구분하여 파일을 나눈다.
   const operatorWord = arrySame(fromDBData.operator);
-  const operandrWord = arrySame(fromDBData.operand);
+  const operandWord = arrySame(fromDBData.operand);
 
-  return console.log(operandrWord, '-----',operatorWord);
+  console.log(operandWord, '-----',operatorWord);
 
   // 비교하기 후 각 결과에 저장하기
-    // 동일 단어와 차이 나는 단어들을 찾습니다.
-    // const sameWords = operatorWords.filter(word => operandWords.includes(word));
-    // const differenceWordsOperator = operatorWords.filter(word => !operandWords.includes(word));
-    // const differenceWordsOperand = operandWords.filter(word => !operatorWords.includes(word));
-  
-  const sameWord = operatorWord.filter(word => operandrWord.includes(word))
-  const differenceWord = ""
+  // 동일 단어와 차이 나는 단어들을 찾습니다.
+  const sameWord = operatorWord.filter(word => operandWord.includes(word))
+
+  // 차이나는 단어들을 찾습니다. Set을 사용하여 중복을 제거하고 새로운 배열을 생성합니다. 그리고 같은 것과 다른 것을 제거합니다.
+const allWords = new Set(operandWord.concat(operandWord));
+const differenceWord = Array.from(allWords).filter(word => !sameWord.includes(word));
 
   result = {
     "sameWords" : sameWord,
@@ -62,6 +61,7 @@ export default function A (inputJSONName, outputJSONName) {
 
   // 저장한 값 writefile로 덮어쓰기
 
-  // return result
+  
+  return result
 }
 A("fromDB-data.json", "differences.json");
