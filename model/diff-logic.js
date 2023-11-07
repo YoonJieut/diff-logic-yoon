@@ -3,6 +3,8 @@ import path from 'path';
 import { arrySame } from './arrySame.js';
 
 /**
+ * 이름을 넣으면 data 안에 있는 json과 이름을 확인한 후 함수 실행
+ * 같은 model에 들어있는 arrySame 함수와 연결되어 작동된다.
  * 
  * @param {JSON, Path} inputJSONdata 
  * @param {JSON, Path} outputJSONdata 
