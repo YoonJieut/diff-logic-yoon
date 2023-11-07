@@ -1,20 +1,21 @@
-// ESM 방식으로 fs/promises와 path 모듈 가져오기
-import { readFile } from 'fs/promises';
+import { readFileSync, writeFileSync } from 'fs';
 import path from 'path';
+import { arrySame } from './arrySame.js';
 
 /**
+ * 이름을 넣으면 data 안에 있는 json과 이름을 확인한 후 함수 실행
+ * 같은 model에 들어있는 arrySame 함수와 연결되어 작동된다.
  * 
  * @param {JSON, Path} inputJSONdata 
  * @param {JSON, Path} outputJSONdata 
  * @returns Object
  */
 
-
-export default function A (inputJSONPath, outputJSONPath) {
-  if (!inputJSONPath.endsWith('.json') || !outputJSONPath.endsWith('.json')) {
-    throw new Error(`매개변수 ${inputJSONPath}, ${outputJSONPath}는 json 파일이 아닙니다.`);
+export default function (inputJSONName, outputJSONName) {
+  if (!inputJSONName.endsWith('.json') || !outputJSONName.endsWith('.json')) {
+    throw new Error(`매개변수 ${inputJSONName}, ${outputJSONName}는 json 파일이 아닙니다.`);
   }
-  let result = { };
+  let result = {};
   /**
    * ? Q. JSON 파일을 아래의 5, 6번에 해당하는 로직 작성 후 JSON으로 저장
    * ? Q. 저장이 완료되면 초기화된 result에 객체를 리턴
@@ -22,35 +23,47 @@ export default function A (inputJSONPath, outputJSONPath) {
    * * 1. inputJSONdata, outputJSONdata를 읽어서 JSON 객체로 변환
    * * 2. inputJSONdata, outputJSONdata의 value를 비교
    * * 3. outputJSONpath 매개변수의 key에 해당하는 정보를 저장
-   * * 4. dirrences.json 파일에 필요한 상태값
+   * * 4. diffences.json 파일에 필요한 상태값
    * * 5. 같은 단어가 무엇인지 저장
    * * 6. 다른 단어가 무엇인지 저장
    * * 7. 리턴을 통해 결과값을 전달
    */
 
+  // 파일을 읽어온다.
+  // 경로 설정 변수 세팅 
+  // * 상대경로와 절대경로 방식 2가지 방식
+  // * 절대경로가 다른 컴퓨터에서도 오류가 나지 않을 확률이 높다.
+  // const inputJSONPath = `data/${inputJSONName}`
+  const inputJSONPath = path.join(process.cwd(), 'data', inputJSONName)
+  const outputJSONPath = path.join(process.cwd(), 'data', outputJSONName)
 
+  // json 파일로 parse한다.
+  const fromDBData = JSON.parse(readFileSync(inputJSONPath, { encoding: 'utf8' }));
+  // * 결과 파일의 양식을 읽어오지 않는 방식을 선택
+  // * 대신 result와 같은 양식인 객체 리터럴을 생성했다.
+  // const diffDBData = JSON.parse(readFileSync(outputJSONPath, { encoding: 'utf8' }));
 
+  // 띄워쓰기를 구분하여 파일을 나눈다.
+  const operatorWord = arrySame(fromDBData.operator);
+  const operandWord = arrySame(fromDBData.operand);
 
+  // console.log(operandWord, '-----',operatorWord);
 
+  // 비교하기 후 각 결과에 저장하기
+  // 동일 단어와 차이 나는 단어들을 찾습니다.
+  const sameWord = operatorWord.filter(word => operandWord.includes(word))
 
-  return result;
-};
+  // 차이나는 단어들을 찾습니다. Set을 사용하여 중복을 제거하고 새로운 배열을 생성합니다. 그리고 같은 것과 다른 것을 제거합니다.
+const allWords = new Set(operandWord.concat(operandWord));
+const differenceWord = Array.from(allWords).filter(word => !sameWord.includes(word));
 
-//process.cwd()가 __dirname과 같다. esm 방식에선__dirname은 지원하지 않는다.
+  result = {
+    "sameWords" : sameWord,
+    "differenceWords" : differenceWord
+  };
 
-const jsonFilePath = path.join(process.cwd(),'data', 'fromDB-data.json'); // JSON 파일 경로
-console.log(jsonFilePath);
-// 비동기 함수에서 await를 사용하여 파일 읽기
-async function readJsonFile() {
-  try {
-    const jsonString = await readFile(jsonFilePath, 'utf8');
-    const data = JSON.parse(jsonString);
-    console.log('JSON data:', data); // JSON 데이터 출력
-  } catch (err) {
-    console.error('Error reading or parsing JSON file:', err);
-  }
+  // 저장한 값 writefile로 덮어쓰기
+  writeFileSync(outputJSONPath, JSON.stringify(result, null, 2),{encoding : "utf8"});
+
+  return result
 }
-
-readJsonFile();
-
-

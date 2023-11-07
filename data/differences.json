@@ -1,4 +1,19 @@
 {
+<<<<<<< HEAD
   "sameWords": [],
   "differenceWords": []
+=======
+  "sameWords": [
+    "the",
+    "future",
+    "live",
+    "the",
+    "present"
+  ],
+  "differenceWords": [
+    "and",
+    "give",
+    "up"
+  ]
+>>>>>>> 8c5f3ad3e417be62c49a21495ec61a48b293db01
 }
