@@ -45,6 +45,6 @@ export default function A (inputJSONName, outputJSONName) {
 
 
 
-  return console.log(operandrWord, '-------',operatorWord);
+  return console.log(operandrWord, '-----',operatorWord);
 }
 A("fromDB-data.json", "differences.json");
