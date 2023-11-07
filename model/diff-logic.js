@@ -1,3 +1,6 @@
+import { readFileSync } from 'fs';
+import path from 'path';
+
 
 /**
  * 
@@ -6,9 +9,9 @@
  * @returns Object
  */
 
-export default function(inputJSONPath, outputJSONPath) {
-  if (!inputJSONPath.endsWith('.json') || !outputJSONPath.endsWith('.json')) {
-    throw new Error(`매개변수 ${inputJSONPath}, ${outputJSONPath}는 json 파일이 아닙니다.`);
+export default function A (inputJSONName, outputJSONName) {
+  if (!inputJSONName.endsWith('.json') || !outputJSONName.endsWith('.json')) {
+    throw new Error(`매개변수 ${inputJSONName}, ${outputJSONName}는 json 파일이 아닙니다.`);
   }
   let result = {};
   /**
@@ -24,7 +27,14 @@ export default function(inputJSONPath, outputJSONPath) {
    * * 7. 리턴을 통해 결과값을 전달
    */
 
-  
+  // step1. 파일을 읽어옵니다.
+  // 경로 설정 변수 세팅
+  // const inputJSONPath = `data/${inputJSONName}`
+  const fromDBData = JSON.parse(readFileSync(inputJSONPath, { encoding: 'utf8' }));
 
-  return result;
+
+result = fromDBData;
+
+  return console.log(result);
 }
+A("fromDB-data.json", "differences.json");
