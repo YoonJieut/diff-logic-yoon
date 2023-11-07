@@ -18,11 +18,13 @@ export default function(inputJSONPath, outputJSONPath) {
    * * 1. inputJSONdata, outputJSONdata를 읽어서 JSON 객체로 변환
    * * 2. inputJSONdata, outputJSONdata의 value를 비교
    * * 3. outputJSONpath 매개변수의 key에 해당하는 정보를 저장
-   * * 4. dirrences.json 파일에 필요한 상태값
+   * * 4. diffences.json 파일에 필요한 상태값
    * * 5. 같은 단어가 무엇인지 저장
    * * 6. 다른 단어가 무엇인지 저장
    * * 7. 리턴을 통해 결과값을 전달
    */
+
+  
 
   return result;
 }

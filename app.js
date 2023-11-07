@@ -11,4 +11,4 @@ const outputJSONPath = "./config/differences.json";
 // controller
 
 const resultObject = diffLogic(inputJSONPath, outputJSONPath);
-console.log(resultObject);
+// console.log(resultObject);
