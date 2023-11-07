@@ -1,5 +1,6 @@
 import { readFileSync } from 'fs';
 import path from 'path';
+import { arrySame } from './arrySame.js';
 
 
 /**
@@ -40,11 +41,27 @@ export default function A (inputJSONName, outputJSONName) {
   const diffDBData = JSON.parse(readFileSync(outputJSONPath, { encoding: 'utf8' }));
 
   // 띄워쓰기를 구분하여 파일을 나눈다.
-  const operatorWord = fromDBData.operator.split(/\s+/);
-  const operandrWord = fromDBData.operand.split(/\s+/);
-
-
+  const operatorWord = arrySame(fromDBData.operator);
+  const operandrWord = arrySame(fromDBData.operand);
 
   return console.log(operandrWord, '-----',operatorWord);
+
+  // 비교하기 후 각 결과에 저장하기
+    // 동일 단어와 차이 나는 단어들을 찾습니다.
+    // const sameWords = operatorWords.filter(word => operandWords.includes(word));
+    // const differenceWordsOperator = operatorWords.filter(word => !operandWords.includes(word));
+    // const differenceWordsOperand = operandWords.filter(word => !operatorWords.includes(word));
+  
+  const sameWord = operatorWord.filter(word => operandrWord.includes(word))
+  const differenceWord = ""
+
+  result = {
+    "sameWords" : sameWord,
+    "differenceWords" : differenceWord
+  };
+
+  // 저장한 값 writefile로 덮어쓰기
+
+  // return result
 }
 A("fromDB-data.json", "differences.json");
