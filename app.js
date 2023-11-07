@@ -1,14 +1,15 @@
 // built-in modules
-import fs from "fs";
+// import fs from "fs";
 
 // custom modules
 import diffLogic from "./model/diff-logic.js";
 
 // json files name
-const inputJSONPath = "./config/fromDB-data.json";
-const outputJSONPath = "./config/differences.json";
+// * 이름 작성 하고, data안에 json만 넣으면 작동하는 함수
+const inputJSONName = "fromDB-data.json";
+const outputJSONName = "differences.json";
 
 // controller
 
-const resultObject = diffLogic(inputJSONPath, outputJSONPath);
-// console.log(resultObject);
+const resultObject = diffLogic(inputJSONName, outputJSONName);
+console.log(resultObject);
