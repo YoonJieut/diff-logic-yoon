@@ -1,4 +1,14 @@
 {
-  "sameWords": [],
-  "differenceWords": []
+  "sameWords": [
+    "the",
+    "future",
+    "live",
+    "the",
+    "present"
+  ],
+  "differenceWords": [
+    "and",
+    "give",
+    "up"
+  ]
 }

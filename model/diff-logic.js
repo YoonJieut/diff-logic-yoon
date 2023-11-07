@@ -1,4 +1,4 @@
-import { readFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 import path from 'path';
 import { arrySame } from './arrySame.js';
 
@@ -60,8 +60,8 @@ const differenceWord = Array.from(allWords).filter(word => !sameWord.includes(wo
   };
 
   // 저장한 값 writefile로 덮어쓰기
+  writeFileSync(outputJSONPath, JSON.stringify(result, null, 2),{encoding : "utf8"});
 
-  
   return result
 }
 A("fromDB-data.json", "differences.json");
